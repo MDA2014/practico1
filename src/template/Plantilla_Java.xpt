@@ -70,11 +70,11 @@ Posicionado en la metaclase Clase, navego a través de atributos_clases
 para saber si hay elementos de atributos
 «ENDREM»     
 «IF !this.atributos_clases.isEmpty»
-    public «this.nombre»(«EXPAND fabricarConstructores FOREACH atributos_clases SEPARATOR ","» 
-    «IF !this.herenciasClases_contenidas.isEmpty»,
-        «EXPAND atributos_herencia FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.atributos_clases SEPARATOR ","»
+    public «this.nombre»(«EXPAND fabricarConstructores FOREACH atributos_clases SEPARATOR ","»
+    «IF !this.herenciasClases_contenidas.isEmpty && !this.herenciasClases_contenidas.hereda_Clase_Destino.atributos_clases.isEmpty»
+        , «EXPAND atributos_herencia FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.atributos_clases SEPARATOR ","»
     «ENDIF») {
-        «IF !this.herenciasClases_contenidas.isEmpty»
+        «IF !this.herenciasClases_contenidas.isEmpty && !this.herenciasClases_contenidas.hereda_Clase_Destino.atributos_clases.isEmpty»
             super(«EXPAND SuperConstructor FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.atributos_clases SEPARATOR ","»);
         «ENDIF»
         «EXPAND asignoAtributos FOREACH this.atributos_clases»
