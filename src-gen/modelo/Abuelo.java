@@ -33,6 +33,6 @@ public abstract class Abuelo
 
 	}
 
-	private abstract boolean besar();
+	public abstract boolean besar();
 
 }

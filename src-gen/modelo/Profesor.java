@@ -27,6 +27,21 @@ extends Persona
 
 	// Metodos de la clase
 
-	// Metodo redefinido de una herencia de clases
+	// Metodos redefinidos de una herencia de clases
+
+	// Métodos heredados de Profesor
+
+	// Métodos heredados de Persona
+
+	// Métodos heredados de Abuelo
+
+	@Override
+	public boolean besar() {
+
+		// Implemente el codigo;
+
+		return false;
+
+	}
 
 }

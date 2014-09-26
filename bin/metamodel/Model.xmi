@@ -24,7 +24,8 @@
   <interfaces_del_Diagrama
       nombre="Ijugador">
     <operaciones_iterfaces
-        nombre="jugar"/>
+        nombre="jugar"
+        visibilidad="public"/>
   </interfaces_del_Diagrama>
   <interfaces_del_Diagrama
       nombre="Ifumador"/>
@@ -67,7 +68,8 @@
     <operaciones_clases
         nombre="besar"
         tipo_retorno="boolean"
-        esAbstracto="true"/>
+        esAbstracto="true"
+        visibilidad="public"/>
   </clases_del_Diagrama>
   <clases_del_Diagrama
       nombre="Domicilio">
@@ -80,6 +82,9 @@
       nombre="Alumno">
     <atributos_clases
         nombre="legajo"/>
+    <atributos_clases
+        nombre="nombre"
+        tipo="String"/>
     <herenciasClases_contenidas
         herenciaClase_Origen="//@clases_del_Diagrama.3"
         hereda_Clase_Destino="//@clases_del_Diagrama.0"

@@ -59,7 +59,9 @@ implements Ijugador, Ifumador
 
 	// Metodos de la clase
 
-	private int jugar() {
+	// Metodos de las interfaces realizadas 
+
+	public int jugar() {
 
 		// Implemente el codigo;
 

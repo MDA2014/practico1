@@ -1,92 +1,77 @@
-
-
 package modelo;
 
-public  class Alumno 
-	
-    
-        extends 
-    Persona
-         
-     
+public class Alumno
 
-	
-        
+extends Persona
+
 {
 
-     
-// Crear los atributos de la clase
+	// Crear los atributos de la clase
 
-    private int legajo;
+	private int legajo;
 
+	private String nombre;
 
-         
-// Crear las asociaciones a otras clases e interfaces
+	// Crear las asociaciones a otras clases e interfaces
 
+	// Crear los punteros a otras clases por composicion
 
-            
-// Crear los punteros a otras clases por composicion
- 
+	// Crear los punteros a otras clases por agregacion
 
+	public Alumno() {
+	}
 
-// Crear los punteros a otras clases por agregacion
+	public Alumno(int legajo, String nombre
 
-         
+	) {
 
+		this.legajo = legajo;
 
-public Alumno() {}
+		this.nombre = nombre;
 
-     
+	}
 
-    public Alumno(
-    int legajo
- 
-    ,
-        
-    ) {
-        
-            super();
-        
-        
-    this.legajo = legajo;
+	// Crear getter y setter de atributos
 
-    }
+	public void setLegajo(int legajo) {
+		this.legajo = legajo;
+	}
 
+	public int getLegajo() {
+		return legajo;
+	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    
-// Crear getter y setter de atributos
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setLegajo(int legajo) {
-        this.legajo = legajo;
-    }
-    
-    public int getLegajo() {
-        return legajo;
-    }
+	// Crear getter y setter de referencias de asociacion
 
-                  
-// Crear getter y setter de referencias de asociacion
+	// Crear getter y setter de referencias de composicion
 
-              
-// Crear getter y setter de referencias de composicion
+	// Crear getter y setter de referencias de agregacion
 
-          
-// Crear getter y setter de referencias de agregacion
+	// Metodos de la clase
 
+	// Metodos redefinidos de una herencia de clases
 
-          
-// Metodos de la clase
+	// Métodos heredados de Alumno
 
+	// Métodos heredados de Persona
 
+	// Métodos heredados de Abuelo
 
-    // Metodo redefinido de una herencia de clases
-     
+	@Override
+	public boolean besar() {
 
+		// Implemente el codigo;
 
- 
+		return false;
 
+	}
 
 }
-
-	

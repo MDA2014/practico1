@@ -99,13 +99,22 @@ para saber si hay elementos de atributos
 // Metodos de la clase
 «EXPAND metodos_de_clase FOREACH operaciones_clases»
 
+«REM» Generar operaciones de la herencia «ENDREM» 
 «IF this.esAbstracta==false»
-    // Metodo redefinido de una herencia de clases
-    «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.operaciones_clases» 
+    // Metodos redefinidos de una herencia de clases
+    «EXPAND clase_metodos_implementados_herencia FOR this»
+    «REM»
+    «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.operaciones_clases»
+    «IF this.herenciasClases_contenidas.hereda_Clase_Destino.esAbstracta==true»
+        // Metodos redefinidos de una herencia de clases en segundo nivel
+        «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.herenciasClases_contenidas.hereda_Clase_Destino.operaciones_clases»
+    «ENDIF»
+    «ENDREM»
 «ENDIF»
 
 «REM» Si existen realizaciones «ENDREM» 
-«IF !this.realizacion_contenida.isEmpty» 
+«IF !this.realizacion_contenida.isEmpty»
+    // Metodos de las interfaces realizadas 
     «EXPAND implementa_metodos_de_las_Interfaces FOREACH this.realizacion_contenida.destinoRealizacion.operaciones_iterfaces»
 «ENDIF»
 
@@ -131,6 +140,15 @@ para saber si hay elementos de atributos
             return null;
         «ENDIF»
         }
+    «ENDIF»
+«ENDDEFINE»
+
+
+«DEFINE clase_metodos_implementados_herencia FOR Clase»
+    // Métodos heredados de «this.nombre»
+    «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.operaciones_clases»
+    «IF !this.herenciasClases_contenidas.isEmpty»
+        «EXPAND clase_metodos_implementados_herencia FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino»
     «ENDIF»
 «ENDDEFINE»
 
@@ -245,7 +263,7 @@ para averiguar el nombre de la interfaz
 Posicionados en la metaclase Atributo, aramamos su tipo y su nombre
 «ENDREM»
 «DEFINE atributosClase FOR Atributo»
-    private «this.tipo» «this.nombre»;
+    «this.visibilidad» «this.tipo» «this.nombre»;
 «ENDDEFINE»
 
 
