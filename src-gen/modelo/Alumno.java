@@ -1,30 +1,92 @@
+
+
 package modelo;
 
-public class Alumno
+public  class Alumno 
+	
+    
+        extends 
+    Persona
+         
+     
 
+	
+        
 {
 
-	// Crear los atributos de la clase
+     
+// Crear los atributos de la clase
 
-	// Crear las asociaciones a otras clases e interfaces
+    private int legajo;
 
-	// Crear los punteros a otras clases por composicion
 
-	// Crear los punteros a otras clases por agregacion
+         
+// Crear las asociaciones a otras clases e interfaces
 
-	public Alumno() {
-	}
 
-	// Crear getter y setter de atributos
+            
+// Crear los punteros a otras clases por composicion
+ 
 
-	// Crear getter y setter de referencias de asociacion
 
-	// Crear getter y setter de referencias de composicion
+// Crear los punteros a otras clases por agregacion
 
-	// Crear getter y setter de referencias de agregacion
+         
 
-	// Metodos de la clase
 
-	// Metodo redefinido de una herencia de clases
+public Alumno() {}
+
+     
+
+    public Alumno(
+    int legajo
+ 
+    ,
+        
+    ) {
+        
+            super();
+        
+        
+    this.legajo = legajo;
+
+    }
+
+
+
+    
+// Crear getter y setter de atributos
+
+    public void setLegajo(int legajo) {
+        this.legajo = legajo;
+    }
+    
+    public int getLegajo() {
+        return legajo;
+    }
+
+                  
+// Crear getter y setter de referencias de asociacion
+
+              
+// Crear getter y setter de referencias de composicion
+
+          
+// Crear getter y setter de referencias de agregacion
+
+
+          
+// Metodos de la clase
+
+
+
+    // Metodo redefinido de una herencia de clases
+     
+
+
+ 
+
 
 }
+
+	
