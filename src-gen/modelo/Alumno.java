@@ -4,27 +4,27 @@ public class Alumno
 
 {
 
-	// crear los atributos de la clase
+	// Crear los atributos de la clase
 
-	// crear las asociaciones a otras clases e interfaces
+	// Crear las asociaciones a otras clases e interfaces
 
-	// crear los punteros a otras clases por composicion
+	// Crear los punteros a otras clases por composicion
 
-	// crear los punteros a otras clases por agregacion
+	// Crear los punteros a otras clases por agregacion
 
 	public Alumno() {
 	}
 
-	// crear getter y setter de atributos
+	// Crear getter y setter de atributos
 
-	// crear getter y setter de referencias de asociacion
+	// Crear getter y setter de referencias de asociacion
 
-	// crear getter y setter de referencias de compoisicion
+	// Crear getter y setter de referencias de composicion
 
-	// crear getter y setter de referencias de agregacion
+	// Crear getter y setter de referencias de agregacion
 
-	// mètodos de la clase
+	// Metodos de la clase
 
-	// mètodo redefinido de una he derencia clases
+	// Metodo redefinido de una herencia de clases
 
 }

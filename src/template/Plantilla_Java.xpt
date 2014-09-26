@@ -17,17 +17,17 @@ los elementos internos de una clase
 package modelo;
 
 public «IF this.esAbstracta==true»abstract«ENDIF» class «this.nombre» 
-«REM» Pregunto si hay herencias «ENDREM»
-    «IF !this.herenciasClases_contenidas.isEmpty» extends
-        «EXPAND herencia_entre_Clases_Implementa FOREACH herenciasClases_contenidas»         
+	«REM» Pregunto si hay herencias «ENDREM»
+    «IF !this.herenciasClases_contenidas.isEmpty»
+        extends «EXPAND herencia_entre_Clases_Implementa FOREACH herenciasClases_contenidas»         
     «ENDIF» 
 
-«REM»
-Posicionado en la metaclase Clase, navego a través de realizacion_contenida
-para averiguar si hay implementaciones de interfaces
-«ENDREM»
-    «IF !this.realizacion_contenida.isEmpty» implements
-        «EXPAND realizacion_Implementa FOREACH realizacion_contenida SEPARATOR ","» 
+	«REM»
+	Posicionado en la metaclase Clase, navego a través de realizacion_contenida
+	para averiguar si hay implementaciones de interfaces
+	«ENDREM»
+    «IF !this.realizacion_contenida.isEmpty»
+        implements «EXPAND realizacion_Implementa FOREACH realizacion_contenida SEPARATOR ","» 
     «ENDIF»    
 {
 
@@ -91,7 +91,7 @@ para saber si hay elementos de atributos
 «REM» Generar getter y setter de todas las composiciones «ENDREM»              
 // Crear getter y setter de referencias de composicion
 «EXPAND getter_setter_Composiciones FOREACH composiciones_contenidas»
-«REM» Generar getter y setter de todos las agregaciones «ENDREM»          
+«REM» Generar getter y setter de todas las agregaciones «ENDREM»          
 // Crear getter y setter de referencias de agregacion
 «EXPAND getter_setter_Agregaciones FOREACH agregaciones_contenidas»
 
@@ -100,7 +100,7 @@ para saber si hay elementos de atributos
 «EXPAND metodos_de_clase FOREACH operaciones_clases»
 
 «IF this.esAbstracta==false»
-    // mètodo redefinido de una herencia de clases
+    // Metodo redefinido de una herencia de clases
     «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.operaciones_clases» 
 «ENDIF»
 
@@ -115,382 +115,294 @@ para saber si hay elementos de atributos
 «ENDDEFINE»
 
 
-«REM»------------Metodos que se deben implementar de las Interfaces-----------------------«ENDREM»
-
-«DEFINE implementa_metodos_de_las_Interfaces  FOR Operacion»
-
- «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»){
-  
-  «IF this.tipo_retorno.toString()=="void"» 
-// Redefina el còdigo;
-}
-  «ELSE» 
-  
-// Implemente el còdigo;
- 	 «IF this.tipo_retorno.toString()=="int"||this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float" » 
- 	    return  0;
- 	    
- 	  «ELSE»
- 	      «IF this.tipo_retorno.toString()=="boolean"»
- 	      return false ;
- 	      «ELSE»
- 	           «IF this.tipo_retorno.toString()=="String"»
- 	            return null ;
- 	            «ELSE»
- 	             «ENDIF»
- 	      «ENDIF»
- 	     
- 	 «ENDIF»
-	 }
- «ENDIF» 
-
-
-
+«REM» Métodos que se deben implementar de las interfaces «ENDREM»
+«DEFINE implementa_metodos_de_las_Interfaces FOR Operacion»
+    «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","») {
+    «IF this.tipo_retorno.toString()=="void"» 
+        // Redefina el codigo;
+        }
+    «ELSE»
+        // Implemente el codigo;
+ 	    «IF this.tipo_retorno.toString()=="int" || this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float"»
+            return  0;
+        «ELSEIF this.tipo_retorno.toString()=="boolean"»
+            return false;
+        «ELSEIF this.tipo_retorno.toString()=="String"»
+            return null;
+        «ENDIF»
+        }
+    «ENDIF»
 «ENDDEFINE»
 
 
-
-
-
-«REM»---------------------ASIGNO ATRIBUTOS-------------------------«ENDREM»
+«REM» Asigno atributos «ENDREM»
 «REM»
-Posicionado en la Metaclase Atributo obtengo su tipo y su nombre a travès de this
+Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de this
 «ENDREM»
-«DEFINE asignoAtributos  FOR Atributo»
-this.«this.nombre»=«this.nombre»;
+«DEFINE asignoAtributos FOR Atributo»
+    this.«this.nombre» = «this.nombre»;
 «ENDDEFINE»
 
-«REM»---------------------SUPERCONSTRUCTOR-------------------------«ENDREM»
+
+«REM» Superconstructor «ENDREM»
 «REM»
-Posicionado en la Metaclase Atributo obtengo su tipo y su nombre a travès de this
+Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de this
 «ENDREM»
-«DEFINE SuperConstructor  FOR Atributo»
-«this.nombre»
+«DEFINE SuperConstructor FOR Atributo»
+    «this.nombre»
 «ENDDEFINE»
 
-«REM»---------------------Atributos de la Herencia-------------------------«ENDREM»
+
+«REM» Atributos de la herencia«ENDREM»
 «REM»
-Posicionado en la Metaclase Atributo obtengo su tipo y su nombre a travès de this
+Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de this
 «ENDREM»
-«DEFINE atributos_herencia  FOR Atributo»
-«this.tipo» «this.nombre»
+«DEFINE atributos_herencia FOR Atributo»
+    «this.tipo» «this.nombre»
 «ENDDEFINE»
 
 
-
-«REM»-----------------------FABRICAR CONSTRUCTORES----------------------------«ENDREM»
+«REM» Fabricar constructores«ENDREM»
 «REM»
-Posicionado en la Metaclase Atributo obtengo su tipo y su nombre a travès de this
+Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de this
 «ENDREM»
 «DEFINE fabricarConstructores FOR Atributo»
-«this.tipo» «this.nombre»
+    «this.tipo» «this.nombre»
 «ENDDEFINE»
 
 
-«REM»-------------------------Herencia entre Clases----------------------------«ENDREM»
+«REM» Herencia entre clases «ENDREM»
 «DEFINE herencia_entre_Clases_Implementa FOR Herencia»
-«this.hereda_Clase_Destino.nombre» 
+    «this.hereda_Clase_Destino.nombre»
 «ENDDEFINE»
-  
 
 
-
-
-
-«REM»--------------------------METODOS que se heredan abstractos para redefinir----------------------------«ENDREM»
+«REM» Métodos que se heredan abstractos para redefinir «ENDREM»
 «DEFINE implementa_metodos_Heredados_de_Clase FOR Operacion»
-
-«IF this.esAbstracto==true» 
-@Override
- «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»){
-  
-  «IF this.tipo_retorno.toString()=="void"» 
-// Redefina el còdigo;
-}
-  «ELSE» 
-  
-// Implemente el còdigo;
- 	 «IF this.tipo_retorno.toString()=="int"||this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float" » 
- 	    return  0;
- 	    
- 	  «ELSE»
- 	      «IF this.tipo_retorno.toString()=="boolean"»
- 	      return false ;
- 	      «ELSE»
- 	           «IF this.tipo_retorno.toString()=="String"»
- 	            return null ;
- 	            «ELSE»
- 	             «ENDIF»
- 	      «ENDIF»
- 	     
- 	 «ENDIF»
-	 }
- «ENDIF» 
-  
-«ENDIF»
-
+    «IF this.esAbstracto==true» 
+        @Override
+        «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","») {
+        «IF this.tipo_retorno.toString()=="void"»
+            // Redefina el codigo;
+            }
+        «ELSE»
+            // Implemente el codigo;
+            «IF this.tipo_retorno.toString()=="int" || this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float"» 
+                return  0;
+            «ELSEIF this.tipo_retorno.toString()=="boolean"»
+                return false;
+            «ELSEIF this.tipo_retorno.toString()=="String"»
+                return null;
+            «ENDIF»
+            }
+        «ENDIF»
+    «ENDIF»
 «ENDDEFINE»
   
 
-
-
-«REM»--------------------------METODOS ----------------------------«ENDREM»
+«REM» Métodos «ENDREM»
 «DEFINE metodos_de_clase FOR Operacion»
-
-«IF this.esAbstracto==true» 
-
-       «this.visibilidad» abstract «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»);
- 
- 
-«ELSE»
-     «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»){
-   «IF this.tipo_retorno.toString()=="void"» 
-
-// Redefina el còdigo;
-}
-  
-  «ELSE» 
-  
- 	 // Implemente el còdigo;
- 	 «IF this.tipo_retorno.toString()=="int"||this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float" » 
- 	    return  0;
- 	    
- 	  «ELSE»
- 	      «IF this.tipo_retorno.toString()=="boolean"»
- 	      return false ;
- 	      «ELSE»
- 	           «IF this.tipo_retorno.toString()=="String"»
- 	            return null ;
- 	            «ELSE»
- 	             «ENDIF»
- 	      «ENDIF»
- 	     
- 	 «ENDIF»
-	 }
- «ENDIF» 
-  
-«ENDIF»
-
-
+    «IF this.esAbstracto==true» 
+        «this.visibilidad» abstract «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»);
+    «ELSE»
+        «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»){
+        «IF this.tipo_retorno.toString()=="void"» 
+            // Redefina el codigo;
+            }
+        «ELSE»
+            // Implemente el codigo;
+            «IF this.tipo_retorno.toString()=="int" || this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float"»
+                return  0;
+            «ELSEIF this.tipo_retorno.toString()=="boolean"»
+                return false;
+            «ELSEIF this.tipo_retorno.toString()=="String"»
+                return null;
+ 	        «ENDIF»
+ 	        }
+        «ENDIF»
+    «ENDIF» 
 «ENDDEFINE»
 
 
-
-
-
-«REM»-----------------------PARMETROS DE LOS METODOS----------------------------«ENDREM»
-«DEFINE parametros_de_operacion  FOR Parametro»
-«this.tipo-» «this.nombre-»
-
+«REM» Parámetros de los métodos «ENDREM»
+«DEFINE parametros_de_operacion FOR Parametro»
+    «this.tipo-» «this.nombre-»
 «ENDDEFINE»
 
 
-«REM»------------------------Que Interfaces Implemento--------------------------------«ENDREM»
+«REM» Qué interfaces implemento «ENDREM»
 «REM»
-Posicionado en la Metaclase Realizacion navego a travès de destinoRealizacion
-para averiguar el nombre de la Interfaz interfaces
+Posicionado en la metaclase Realizacion, navego a través de destinoRealizacion
+para averiguar el nombre de la interfaz
 «ENDREM»
 «DEFINE realizacion_Implementa FOR Realizacion»
- «this.destinoRealizacion.nombre»
-«ENDDEFINE»
-«REM»---------------------------------------------------------------------------«ENDREM»
- «REM»
-Posicionados en la metaclase Atributo aramamos su tipo y su nombre
-«ENDREM»
-
-«DEFINE atributosClase  FOR Atributo»
-private «this.tipo» «this.nombre»;
+    «this.destinoRealizacion.nombre»
 «ENDDEFINE»
 
-«REM»---------------------------------------------------------------------------«ENDREM»
- «REM»
-Posicionados en la metaclase Asociacion averiguo navegando si es una clase
-«ENDREM» 
-«DEFINE asociaciones  FOR Asociacion»
 
-    «IF this.haciaInterfazdesdeClase.metaType== similuml::Interface»
-     private «this.haciaInterfazdesdeClase.nombre» «this.haciaInterfazdesdeClase.nombre.toFirstLower()»;
-    «ELSE»
-	    private «this.destino.nombre» «this.nombre.toFirstLower()»;
-   «ENDIF»
-
-«ENDDEFINE»
-
-«REM»---------------------------------------------------------------------------«ENDREM»
-
-«DEFINE composiciones FOR Composicion»
-   private «this.destino.nombre» «this.nombre.toFirstLower()» = new «this.destino.nombre»();
-«ENDDEFINE»
-
-«REM»---------------------------------------------------------------------------«ENDREM»
-«DEFINE agregaciones FOR Agregacion»
-private «this.destino.nombre» «this.nombre.toFirstLower()»;
-«ENDDEFINE»
-«REM»---------------------------------------------------------------------------«ENDREM»
-
-   
-
-
-«REM»---------------------------------------------------------------------------«ENDREM»
+«REM» Atributos de la clase «ENDREM»
 «REM»
-Posicionado en la Metaclase Atributo obtengo  su nombre y su tipo a travès de this
+Posicionados en la metaclase Atributo, aramamos su tipo y su nombre
+«ENDREM»
+«DEFINE atributosClase FOR Atributo»
+    private «this.tipo» «this.nombre»;
+«ENDDEFINE»
+
+
+«REM» Asociaciones de la clase «ENDREM»
+«REM»
+Posicionados en la metaclase Asociacion, averiguo navegando si es una clase
+«ENDREM»
+«DEFINE asociaciones FOR Asociacion»
+    «IF this.haciaInterfazdesdeClase.metaType==similuml::Interface»
+        private «this.haciaInterfazdesdeClase.nombre» «this.haciaInterfazdesdeClase.nombre.toFirstLower()»;
+    «ELSE»
+        private «this.destino.nombre» «this.nombre.toFirstLower()»;
+    «ENDIF»
+«ENDDEFINE»
+
+
+«REM» Composiciones de la clase «ENDREM»
+«DEFINE composiciones FOR Composicion»
+    private «this.destino.nombre» «this.nombre.toFirstLower()» = new «this.destino.nombre»();
+«ENDDEFINE»
+
+
+«REM» Agregaciones de la clase «ENDREM»
+«DEFINE agregaciones FOR Agregacion»
+    private «this.destino.nombre» «this.nombre.toFirstLower()»;
+«ENDDEFINE»
+
+
+«REM» Getter y setter de los atributos «ENDREM»
+«REM»
+Posicionado en la metaclase Atributo, obtengo su nombre y su tipo a través de this
 «ENDREM»
 «DEFINE getter_setter_Atributo FOR Atributo»
-
-public void set«this.nombre.toFirstUpper()»(«this.tipo» «this.nombre») {
+    public void set«this.nombre.toFirstUpper()»(«this.tipo» «this.nombre») {
         this.«this.nombre» = «this.nombre»;
-}
+    }
     
-public «this.tipo» get«this.nombre.toFirstUpper()»() {
+    public «this.tipo» get«this.nombre.toFirstUpper()»() {
         return «this.nombre»;
-}
+    }
 «ENDDEFINE»
 
-«REM»---------------------------------------------------------------------------«ENDREM»
+
+«REM» Getter y setter de las asociaciones «ENDREM»
 «REM»
-Posicionado en la Metaclase Asociocion navego a travès de
-haciaInterfazdesdeClase y averigiuo si es de tipo Interface
-para armar los geeter y setter con esa forma
+Posicionado en la metaclase Asociocion, navego a través de
+haciaInterfazdesdeClase y averiguo si es de tipo Interfaz
+para armar los getter y setter con esa forma
 «ENDREM»
-«DEFINE  getter_setter_Asociaciones FOR Asociacion»
-
- «IF this.haciaInterfazdesdeClase.metaType== similuml::Interface»
-     «REM»
-En este caso es una asociaciòn entre clases e interfaz
-«ENDREM»
-public void set«this.haciaInterfazdesdeClase.nombre.toFirstUpper()»(«this.haciaInterfazdesdeClase.nombre.toFirstUpper()» «this.haciaInterfazdesdeClase.nombre.toFirstLower()») {
-this.«this.haciaInterfazdesdeClase.nombre.toFirstLower()» = «this.haciaInterfazdesdeClase.nombre.toFirstLower()»;
-}
-    
-    
-public «this.haciaInterfazdesdeClase.nombre.toFirstUpper()» get«this.haciaInterfazdesdeClase.nombre.toFirstUpper()»() {
-return «this.haciaInterfazdesdeClase.nombre.toFirstLower()»;
-}
-    
-  
- «ELSE» 
- «REM»
-En este caso es una asociaciòn entre clases
-«ENDREM»
-public void set«this.nombre.toFirstUpper()»(«this.destino.nombre.toFirstUpper()» «this.nombre.toFirstLower()») {
-this.«this.nombre.toFirstLower()» = «this.nombre.toFirstLower()»;
-}
-    
-    
-    
-public «this.destino.nombre.toFirstUpper()» get«this.nombre.toFirstUpper()»() {
-return «this.nombre.toFirstLower()»;
-}     
-«ENDIF»
+«DEFINE getter_setter_Asociaciones FOR Asociacion»
+    «IF this.haciaInterfazdesdeClase.metaType== similuml::Interface»
+        «REM» En este caso es una asociación entre clases e interfaz «ENDREM»
+        public void set«this.haciaInterfazdesdeClase.nombre.toFirstUpper()»(«this.haciaInterfazdesdeClase.nombre.toFirstUpper()» «this.haciaInterfazdesdeClase.nombre.toFirstLower()») {
+            this.«this.haciaInterfazdesdeClase.nombre.toFirstLower()» = «this.haciaInterfazdesdeClase.nombre.toFirstLower()»;
+        }
+        
+        public «this.haciaInterfazdesdeClase.nombre.toFirstUpper()» get«this.haciaInterfazdesdeClase.nombre.toFirstUpper()»() {
+            return «this.haciaInterfazdesdeClase.nombre.toFirstLower()»;
+        }
+    «ELSE»
+        «REM» En este caso es una asociación entre clases «ENDREM»
+        public void set«this.nombre.toFirstUpper()»(«this.destino.nombre.toFirstUpper()» «this.nombre.toFirstLower()») {
+            this.«this.nombre.toFirstLower()» = «this.nombre.toFirstLower()»;
+        }
+        
+        public «this.destino.nombre.toFirstUpper()» get«this.nombre.toFirstUpper()»() {
+            return «this.nombre.toFirstLower()»;
+        }     
+    «ENDIF»
 «ENDDEFINE»
 
 
-«REM»---------------------------------------------------------------------------«ENDREM»
- «REM»
-En este caso es una armamos getter y setter para las composiciones
+«REM» Getter y setter de las composiciones «ENDREM»
+«REM»
+En este caso armamos getter y setter para las composiciones
 «ENDREM»
-«DEFINE  getter_setter_Composiciones FOR Composicion»
-
-public void set«this.nombre.toFirstUpper()»(«this.destino.nombre.toFirstUpper()» «this.nombre.toFirstLower()») {
-this.«this.nombre.toFirstLower()» = «this.nombre.toFirstLower()»;
-}
+«DEFINE getter_setter_Composiciones FOR Composicion»
+    public void set«this.nombre.toFirstUpper()»(«this.destino.nombre.toFirstUpper()» «this.nombre.toFirstLower()») {
+        this.«this.nombre.toFirstLower()» = «this.nombre.toFirstLower()»;
+    }
     
-public «this.destino.nombre.toFirstUpper()» get«this.nombre.toFirstUpper()»() {
-return «this.nombre.toFirstLower()»;
-}
+    public «this.destino.nombre.toFirstUpper()» get«this.nombre.toFirstUpper()»() {
+        return «this.nombre.toFirstLower()»;
+    }
 «ENDDEFINE»
 
-«REM»---------------------------------------------------------------------------«ENDREM»
- «REM»
-En este caso es una armamos getter y setter para las agregaciones
-«ENDREM»
 
+«REM» Getter y setter de las agregaciones «ENDREM»
+«REM»
+En este caso armamos getter y setter para las agregaciones
+«ENDREM»
 «DEFINE  getter_setter_Agregaciones FOR Agregacion»
-
-public void set«this.nombre.toFirstUpper()»(«this.destino.nombre.toFirstUpper()» «this.nombre.toFirstLower()») {
-this.«this.nombre.toFirstLower()» = «this.nombre.toFirstLower()»;
-}
+    public void set«this.nombre.toFirstUpper()»(«this.destino.nombre.toFirstUpper()» «this.nombre.toFirstLower()») {
+        this.«this.nombre.toFirstLower()» = «this.nombre.toFirstLower()»;
+    }
     
- 
-public «this.destino.nombre.toFirstUpper()» get«this.nombre.toFirstUpper()»() {
-return «this.nombre.toFirstLower()»;
-}
+    public «this.destino.nombre.toFirstUpper()» get«this.nombre.toFirstUpper()»() {
+        return «this.nombre.toFirstLower()»;
+    }
 «ENDDEFINE»
 
-«REM»--------------Crear los archivos de Interfaces----------------------------«ENDREM»
+
+
+«REM» Crear los archivos de interfaces «ENDREM»
 «DEFINE javaInterfaz FOR Interface»
+    «FILE "modelo/"+this.nombre+".java"»
 
+package modelo;
  
-«FILE "modelo/"+this.nombre+".java"»
- package modelo;
- 
-  «REM»----------------pregunto si hya herencias--------------------------«ENDREM» 
-
 public interface «this.nombre»
-«IF !this.herenciasInterfaz_contenidas.isEmpty» extends «EXPAND herencia_entre_Interfaces FOREACH this.herenciasInterfaz_contenidas.hereda_Interfaz_destino»         
-«ENDIF» 
- 
- {
-// crear las constantes de las interfaces
+	«REM» Pregunto si hay herencias «ENDREM»
+	«IF !this.herenciasInterfaz_contenidas.isEmpty»
+	    extends «EXPAND herencia_entre_Interfaces FOREACH this.herenciasInterfaz_contenidas.hereda_Interfaz_destino»         
+	«ENDIF»
+{
+
+// Crear las constantes de las interfaces
 «EXPAND constantes_de_interfaces FOREACH this.contantes_Interfaces»
 
-
-// crear los metodos de las interfaces 
+// Crear los metodos de las interfaces 
 «EXPAND operaciones_de_interfaces FOREACH this.operaciones_iterfaces»
 
-
- «IF !this.herenciasInterfaz_contenidas.isEmpty»
-// heredo los metodos de la herencia
-«EXPAND heredo_metodos_interfaces  FOREACH this.herenciasInterfaz_contenidas.hereda_Interfaz_destino.operaciones_iterfaces»
-    
+«IF !this.herenciasInterfaz_contenidas.isEmpty»
+    // Heredo los metodos de la herencia
+    «EXPAND heredo_metodos_interfaces FOREACH this.herenciasInterfaz_contenidas.hereda_Interfaz_destino.operaciones_iterfaces»
 «ENDIF»
- 
- 
+
 }
-«ENDFILE»
-   
-«ENDDEFINE»
-
-«REM»--------------------------Determino de que interfaz se herea ----------------------------«ENDREM»
-
-«DEFINE herencia_entre_Interfaces  FOR Interface»
-«this.nombre»
-
+    «ENDFILE»
 «ENDDEFINE»
 
 
+«REM» Determino de qué interfaz se hereda «ENDREM»
+«DEFINE herencia_entre_Interfaces FOR Interface»
+    «this.nombre»
+«ENDDEFINE»
 
-«REM»--------------Armo las constantes de la interfaz----------------------------«ENDREM»
+
+«REM» Armo las constantes de la interfaz «ENDREM»
 «DEFINE constantes_de_interfaces FOR ConstantesInterfaces»
-
-
-«IF this.tipo.toString()=="int"||this.tipo.toString()=="double" || this.tipo.toString()=="float" » 
- public static final «this.tipo» «this.nombre»  = 0;
-«ELSE»
-«IF this.tipo.toString()=="boolean"»
- public static final «this.tipo» «this.nombre»  = true;
-«ELSE»
-«IF this.tipo.toString()=="String"»
- public static final «this.tipo» «this.nombre»  = "";
-«ELSE»
-«ENDIF»
-«ENDIF»	     
-«ENDIF» 
+    «IF this.tipo.toString()=="int" || this.tipo.toString()=="double" || this.tipo.toString()=="float"»
+        public static final «this.tipo» «this.nombre» = 0;
+    «ELSEIF this.tipo.toString()=="boolean"»
+        public static final «this.tipo» «this.nombre» = true;
+    «ELSEIF this.tipo.toString()=="String"»
+        public static final «this.tipo» «this.nombre» = "";
+    «ENDIF» 
 «ENDDEFINE»
 
 
-«REM»--------------------------METODOS abstractos de la Interfaz ----------------------------«ENDREM»
-
+«REM» Métodos abostractos de la interfaz «ENDREM»
 «DEFINE operaciones_de_interfaces FOR Operacion»
- public  «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","-»);
-
+    public «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","-»);
 «ENDDEFINE»
 
 
-
-«REM»----------------------Heredo los mètodos de la interfaz ----------------------------«ENDREM»
-
+«REM» Heredo los métodos de la interfaz «ENDREM»
 «DEFINE heredo_metodos_interfaces FOR Operacion»
- public  «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","-»);
-
+    public «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","-»);
 «ENDDEFINE»
