@@ -16,25 +16,25 @@ los elementos internos de una clase
 
 package modelo;
 
-public «IF this.esAbstracta==true»abstract«ENDIF» class «this.nombre» 
+public «IF this.esAbstracta==true»abstract«ENDIF» class «this.nombre»
 	«REM» Pregunto si hay herencias «ENDREM»
     «IF !this.herenciasClases_contenidas.isEmpty»
-        extends «EXPAND herencia_entre_Clases_Implementa FOREACH herenciasClases_contenidas»         
-    «ENDIF» 
+        extends «EXPAND herencia_entre_Clases_Implementa FOREACH herenciasClases_contenidas»
+    «ENDIF»
 
 	«REM»
 	Posicionado en la metaclase Clase, navego a través de realizacion_contenida
 	para averiguar si hay implementaciones de interfaces
 	«ENDREM»
     «IF !this.realizacion_contenida.isEmpty»
-        implements «EXPAND realizacion_Implementa FOREACH realizacion_contenida SEPARATOR ","» 
-    «ENDIF»    
+        implements «EXPAND realizacion_Implementa FOREACH realizacion_contenida SEPARATOR ","»
+    «ENDIF»
 {
 
 «REM»
 Posicionado en la metaclase Clase, navego a través de atributos_clases
 para crear los atributos propios de cada clase
-«ENDREM»     
+«ENDREM»
 // Crear los atributos de la clase
 «EXPAND atributosClase FOREACH atributos_clases»
 
@@ -42,14 +42,14 @@ para crear los atributos propios de cada clase
 Posicionado en la metaclase Clase, navego a través de asociaciones_contenidas
 para crear las referencias salientes de las clases. Debo considerar en la función el caso 
 específico de que la asociacion sea hacia una interface o una clase
-«ENDREM»         
+«ENDREM»
 // Crear las asociaciones a otras clases e interfaces
 «EXPAND asociaciones FOREACH asociaciones_contenidas»
 
 «REM»
 Posicionado en la metaclase Clase, navego a través de composiciones_contenidas
 para crear las referencias salientes de las clases.
-«ENDREM»            
+«ENDREM»
 // Crear los punteros a otras clases por composicion
  «EXPAND composiciones FOREACH composiciones_contenidas»
 
@@ -68,7 +68,7 @@ public «this.nombre»() {}
 «REM» Constructor sobrecargado
 Posicionado en la metaclase Clase, navego a través de atributos_clases
 para saber si hay elementos de atributos
-«ENDREM»     
+«ENDREM»
 «IF !this.atributos_clases.isEmpty»
     public «this.nombre»(«EXPAND fabricarConstructores FOREACH atributos_clases SEPARATOR ","»
     «IF !this.herenciasClases_contenidas.isEmpty && !this.herenciasClases_contenidas.hereda_Clase_Destino.atributos_clases.isEmpty»
@@ -82,37 +82,31 @@ para saber si hay elementos de atributos
 «ENDIF»
 
 
-«REM» Generar getter y setter de todos los atributos «ENDREM»    
+«REM» Generar getter y setter de todos los atributos «ENDREM»
 // Crear getter y setter de atributos
 «EXPAND getter_setter_Atributo FOREACH atributos_clases»
-«REM» Generar getter y setter de todas las asociaciones «ENDREM»                  
+«REM» Generar getter y setter de todas las asociaciones «ENDREM»
 // Crear getter y setter de referencias de asociacion
 «EXPAND getter_setter_Asociaciones FOREACH asociaciones_contenidas»
-«REM» Generar getter y setter de todas las composiciones «ENDREM»              
+«REM» Generar getter y setter de todas las composiciones «ENDREM»
 // Crear getter y setter de referencias de composicion
 «EXPAND getter_setter_Composiciones FOREACH composiciones_contenidas»
-«REM» Generar getter y setter de todas las agregaciones «ENDREM»          
+«REM» Generar getter y setter de todas las agregaciones «ENDREM»
 // Crear getter y setter de referencias de agregacion
 «EXPAND getter_setter_Agregaciones FOREACH agregaciones_contenidas»
 
-«REM» Generar operaciones de las clases «ENDREM»          
+«REM» Generar operaciones de las clases «ENDREM»
 // Metodos de la clase
 «EXPAND metodos_de_clase FOREACH operaciones_clases»
 
-«REM» Generar operaciones de la herencia «ENDREM» 
+«REM» Generar operaciones de la herencia «ENDREM»
 «IF this.esAbstracta==false»
     // Metodos redefinidos de una herencia de clases
     «EXPAND clase_metodos_implementados_herencia FOR this»
-    «REM»
-    «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.operaciones_clases»
-    «IF this.herenciasClases_contenidas.hereda_Clase_Destino.esAbstracta==true»
-        // Metodos redefinidos de una herencia de clases en segundo nivel
-        «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino.herenciasClases_contenidas.hereda_Clase_Destino.operaciones_clases»
-    «ENDIF»
-    «ENDREM»
 «ENDIF»
 
-«REM» Si existen realizaciones «ENDREM» 
+
+«REM» Si existen realizaciones «ENDREM»
 «IF !this.realizacion_contenida.isEmpty»
     // Metodos de las interfaces realizadas 
     «EXPAND implementa_metodos_de_las_Interfaces FOREACH this.realizacion_contenida.destinoRealizacion.operaciones_iterfaces»
@@ -127,7 +121,7 @@ para saber si hay elementos de atributos
 «REM» Métodos que se deben implementar de las interfaces «ENDREM»
 «DEFINE implementa_metodos_de_las_Interfaces FOR Operacion»
     «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","») {
-    «IF this.tipo_retorno.toString()=="void"» 
+    «IF this.tipo_retorno.toString()=="void"»
         // Redefina el codigo;
         }
     «ELSE»
@@ -144,6 +138,7 @@ para saber si hay elementos de atributos
 «ENDDEFINE»
 
 
+«REM» Implementación de métodos abstractos heredados «ENDREM»
 «DEFINE clase_metodos_implementados_herencia FOR Clase»
     // Métodos heredados de «this.nombre»
     «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.operaciones_clases»
@@ -197,7 +192,7 @@ Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de th
 
 «REM» Métodos que se heredan abstractos para redefinir «ENDREM»
 «DEFINE implementa_metodos_Heredados_de_Clase FOR Operacion»
-    «IF this.esAbstracto==true» 
+    «IF this.esAbstracto==true»
         @Override
         «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","») {
         «IF this.tipo_retorno.toString()=="void"»
@@ -205,7 +200,7 @@ Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de th
             }
         «ELSE»
             // Implemente el codigo;
-            «IF this.tipo_retorno.toString()=="int" || this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float"» 
+            «IF this.tipo_retorno.toString()=="int" || this.tipo_retorno.toString()=="double" || this.tipo_retorno.toString()=="float"»
                 return  0;
             «ELSEIF this.tipo_retorno.toString()=="boolean"»
                 return false;
@@ -220,11 +215,11 @@ Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de th
 
 «REM» Métodos «ENDREM»
 «DEFINE metodos_de_clase FOR Operacion»
-    «IF this.esAbstracto==true» 
+    «IF this.esAbstracto==true»
         «this.visibilidad» abstract «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»);
     «ELSE»
         «this.visibilidad» «this.tipo_retorno» «this.nombre»(«EXPAND parametros_de_operacion FOREACH parametros_contenidos SEPARATOR ","»){
-        «IF this.tipo_retorno.toString()=="void"» 
+        «IF this.tipo_retorno.toString()=="void"»
             // Redefina el codigo;
             }
         «ELSE»
@@ -238,7 +233,7 @@ Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de th
  	        «ENDIF»
  	        }
         «ENDIF»
-    «ENDIF» 
+    «ENDIF»
 «ENDDEFINE»
 
 
@@ -376,7 +371,7 @@ package modelo;
 public interface «this.nombre»
 	«REM» Pregunto si hay herencias «ENDREM»
 	«IF !this.herenciasInterfaz_contenidas.isEmpty»
-	    extends «EXPAND herencia_entre_Interfaces FOREACH this.herenciasInterfaz_contenidas.hereda_Interfaz_destino»         
+	    extends «EXPAND herencia_entre_Interfaces FOREACH this.herenciasInterfaz_contenidas.hereda_Interfaz_destino»
 	«ENDIF»
 {
 
@@ -410,7 +405,7 @@ public interface «this.nombre»
         public static final «this.tipo» «this.nombre» = true;
     «ELSEIF this.tipo.toString()=="String"»
         public static final «this.tipo» «this.nombre» = "";
-    «ENDIF» 
+    «ENDIF»
 «ENDDEFINE»
 
 
