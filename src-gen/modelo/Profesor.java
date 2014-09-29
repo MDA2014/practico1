@@ -29,11 +29,32 @@ extends Persona
 
 	// Metodos redefinidos de una herencia de clases
 
-	// Métodos heredados de Profesor
+	// Metodos heredados de Profesor
 
-	// Métodos heredados de Persona
+	// Metodos heredados de Persona
 
-	// Métodos heredados de Abuelo
+	// Métodos realizados de la interfaz Ijugador
+
+	public int jugar() {
+
+		// Implemente el codigo;
+
+		return 0;
+
+	}
+
+	// Métodos realizados de la interfaz Ifumador
+
+	// Métodos realizados de la interfaz Ipadre
+
+	// Métodos realizados de la interfaz Idios
+
+	public void existir() {
+
+		// Redefina el codigo;
+	}
+
+	// Metodos heredados de Abuelo
 
 	@Override
 	public boolean besar() {

@@ -12,4 +12,6 @@ extends Idios
 
 	// Heredo los metodos de la herencia
 
+	public void existir();
+
 }

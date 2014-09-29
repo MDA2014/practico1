@@ -29,8 +29,8 @@ extends Compuesta
 
 	// Metodos redefinidos de una herencia de clases
 
-	// Métodos heredados de Domicilio
+	// Metodos heredados de Domicilio
 
-	// Métodos heredados de Compuesta
+	// Metodos heredados de Compuesta
 
 }

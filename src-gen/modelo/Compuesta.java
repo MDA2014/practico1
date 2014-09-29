@@ -37,6 +37,6 @@ public class Compuesta
 
 	// Metodos redefinidos de una herencia de clases
 
-	// Métodos heredados de Compuesta
+	// Metodos heredados de Compuesta
 
 }

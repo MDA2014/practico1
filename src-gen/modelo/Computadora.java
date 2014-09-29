@@ -27,6 +27,6 @@ public class Computadora
 
 	// Metodos redefinidos de una herencia de clases
 
-	// Métodos heredados de Computadora
+	// Metodos heredados de Computadora
 
 }

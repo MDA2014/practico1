@@ -8,4 +8,6 @@ public interface Idios
 
 	// Crear los metodos de las interfaces 
 
+	public void existir();
+
 }

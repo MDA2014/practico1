@@ -4,7 +4,7 @@ public abstract class Persona
 
 extends Abuelo
 
-implements Ijugador, Ifumador
+implements Ijugador, Ifumador, Ipadre
 
 {
 
@@ -58,15 +58,5 @@ implements Ijugador, Ifumador
 	// Crear getter y setter de referencias de agregacion
 
 	// Metodos de la clase
-
-	// Metodos de las interfaces realizadas 
-
-	public int jugar() {
-
-		// Implemente el codigo;
-
-		return 0;
-
-	}
 
 }

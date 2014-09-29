@@ -30,7 +30,12 @@
   <interfaces_del_Diagrama
       nombre="Ifumador"/>
   <interfaces_del_Diagrama
-      nombre="Idios"/>
+      nombre="Idios">
+    <operaciones_iterfaces
+        nombre="existir"
+        tipo_retorno="void"
+        visibilidad="public"/>
+  </interfaces_del_Diagrama>
   <clases_del_Diagrama
       nombre="Persona"
       esAbstracta="true">
@@ -54,6 +59,10 @@
         origenRealizacion="//@clases_del_Diagrama.0"
         destinoRealizacion="//@interfaces_del_Diagrama.3"
         nombre="personaIfumador"/>
+    <realizacion_contenida
+        origenRealizacion="//@clases_del_Diagrama.0"
+        destinoRealizacion="//@interfaces_del_Diagrama.1"
+        nombre="personaPadre"/>
     <herenciasClases_contenidas
         herenciaClase_Origen="//@clases_del_Diagrama.0"
         hereda_Clase_Destino="//@clases_del_Diagrama.1"

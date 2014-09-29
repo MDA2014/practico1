@@ -27,6 +27,6 @@ public class Auto
 
 	// Metodos redefinidos de una herencia de clases
 
-	// Métodos heredados de Auto
+	// Metodos heredados de Auto
 
 }
