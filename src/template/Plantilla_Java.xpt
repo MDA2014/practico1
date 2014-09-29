@@ -99,17 +99,10 @@ para saber si hay elementos de atributos
 // Metodos de la clase
 «EXPAND metodos_de_clase FOREACH operaciones_clases»
 
-«REM» Generar operaciones de la herencia «ENDREM»
+«REM» Generar operaciones de la herencia y las realizaciones «ENDREM»
 «IF this.esAbstracta==false»
     // Metodos redefinidos de una herencia de clases
     «EXPAND clase_metodos_implementados_herencia FOR this»
-«ENDIF»
-
-
-«REM» Si existen realizaciones «ENDREM»
-«IF !this.realizacion_contenida.isEmpty»
-    // Metodos de las interfaces realizadas 
-    «EXPAND implementa_metodos_de_las_Interfaces FOREACH this.realizacion_contenida.destinoRealizacion.operaciones_iterfaces»
 «ENDIF»
 
 }
@@ -138,12 +131,29 @@ para saber si hay elementos de atributos
 «ENDDEFINE»
 
 
-«REM» Implementación de métodos abstractos heredados «ENDREM»
+«REM» Implementación de métodos heredados, tanto abstractos como realizados «ENDREM»
 «DEFINE clase_metodos_implementados_herencia FOR Clase»
-    // Métodos heredados de «this.nombre»
+    // Metodos heredados de «this.nombre»
     «EXPAND implementa_metodos_Heredados_de_Clase FOREACH this.operaciones_clases»
+    
+    «REM» Métodos de interfaz realizados «ENDREM»
+    «IF !this.realizacion_contenida.isEmpty»
+        «EXPAND clase_metodos_interfaz_realizados FOREACH this.realizacion_contenida.destinoRealizacion»
+    «ENDIF»
+    
+    «REM» Llamada recursiva a la clase padre«ENDREM»
     «IF !this.herenciasClases_contenidas.isEmpty»
         «EXPAND clase_metodos_implementados_herencia FOREACH this.herenciasClases_contenidas.hereda_Clase_Destino»
+    «ENDIF»
+«ENDDEFINE»
+
+
+«REM» Implementación de métodos de interfaz realizados «ENDREM»
+«DEFINE clase_metodos_interfaz_realizados FOR Interface»
+    // Métodos realizados de la interfaz «this.nombre»
+    «EXPAND implementa_metodos_de_las_Interfaces FOREACH this.operaciones_iterfaces»
+    «IF !this.herenciasInterfaz_contenidas.isEmpty»
+        «EXPAND clase_metodos_interfaz_realizados FOREACH this.herenciasInterfaz_contenidas.hereda_Interfaz_destino»
     «ENDIF»
 «ENDDEFINE»
 
@@ -166,7 +176,7 @@ Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de th
 «ENDDEFINE»
 
 
-«REM» Atributos de la herencia«ENDREM»
+«REM» Atributos de la herencia «ENDREM»
 «REM»
 Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de this
 «ENDREM»
@@ -175,7 +185,7 @@ Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de th
 «ENDDEFINE»
 
 
-«REM» Fabricar constructores«ENDREM»
+«REM» Fabricar constructores «ENDREM»
 «REM»
 Posicionado en la metaclase Atributo, obtengo su tipo y su nombre a través de this
 «ENDREM»
